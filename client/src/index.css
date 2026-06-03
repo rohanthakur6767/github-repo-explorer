@@ -1,0 +1,622 @@
+/* ----------------------------------------------------------------------------
+   Design tokens
+   A small set of CSS variables keeps colours, spacing, and radii consistent.
+---------------------------------------------------------------------------- */
+:root {
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --border: #d8dee4;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --danger: #cf222e;
+  --shadow: 0 1px 3px rgba(27, 31, 36, 0.08), 0 1px 2px rgba(27, 31, 36, 0.06);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --space: 16px;
+  --max-width: 880px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Layout
+---------------------------------------------------------------------------- */
+.app {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 40px) var(--space) 64px;
+}
+
+.app__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.app__title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 0 0 4px;
+}
+
+.app__subtitle {
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.app__footer {
+  margin-top: 48px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Search bar
+---------------------------------------------------------------------------- */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.search-bar__input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+}
+.search-bar__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.search-bar__button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+.search-bar__button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+.search-bar__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------------------------
+   Recent searches + chips
+---------------------------------------------------------------------------- */
+.recent {
+  max-width: 520px;
+  margin: 16px auto 0;
+}
+.recent__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.recent__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.recent__clear {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+}
+.recent__clear:hover {
+  color: var(--danger);
+}
+.recent__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.chip--sm {
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  cursor: default;
+}
+.chip--sm:hover {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* ----------------------------------------------------------------------------
+   Cards (shared surface look)
+---------------------------------------------------------------------------- */
+.profile,
+.repos,
+.lang,
+.state {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ----------------------------------------------------------------------------
+   Profile card
+---------------------------------------------------------------------------- */
+.profile {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+}
+.profile__avatar {
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.profile__body {
+  flex: 1;
+  min-width: 0;
+}
+.profile__identity {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.profile__name {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.profile__login {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+.profile__bio {
+  margin: 10px 0;
+}
+.profile__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 14px 0;
+}
+.profile__stats strong {
+  color: var(--text);
+}
+.profile__stats li {
+  color: var(--text-muted);
+}
+.profile__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Language bar
+---------------------------------------------------------------------------- */
+.lang {
+  padding: 20px 24px;
+}
+.lang__title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+.lang__bar {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.lang__segment {
+  height: 100%;
+}
+.lang__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+}
+.lang__legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lang__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.lang__pct {
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------------------------------------------
+   Repos
+---------------------------------------------------------------------------- */
+.repos {
+  padding: 8px 0;
+}
+.repos__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 24px;
+  flex-wrap: wrap;
+}
+.repos__title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.repos__count {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.repos__empty {
+  padding: 0 24px 16px;
+  color: var(--text-muted);
+}
+.repos__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: opacity 0.15s ease;
+}
+.repos__list--busy {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.sort-control select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Repo card
+---------------------------------------------------------------------------- */
+.repo {
+  border-top: 1px solid var(--border);
+}
+.repo__header {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 16px 24px;
+}
+.repo__header:hover {
+  background: var(--bg);
+}
+.repo__title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.repo__name {
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 1rem;
+}
+.repo__badge {
+  font-size: 0.7rem;
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+}
+.repo__chevron {
+  margin-left: auto;
+  color: var(--text-muted);
+}
+.repo__description {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+.repo__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.repo__lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.repo__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.repo__updated {
+  margin-left: auto;
+}
+
+.repo__details {
+  padding: 0 24px 18px;
+  animation: fade-in 0.18s ease;
+}
+.repo__details dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin: 0 0 12px;
+}
+.repo__details dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.repo__details dd {
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+.repo__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.repo__link {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.repos__load-more {
+  display: block;
+  margin: 16px auto 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.repos__load-more:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.repos__load-more:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------------------------
+   States (welcome / error)
+---------------------------------------------------------------------------- */
+.state {
+  padding: 48px 24px;
+  text-align: center;
+}
+.state__icon {
+  font-size: 2.5rem;
+}
+.state__title {
+  margin: 12px 0 4px;
+  font-size: 1.3rem;
+}
+.state__body {
+  color: var(--text-muted);
+  margin: 0 auto;
+  max-width: 380px;
+}
+.state__action {
+  margin-top: 18px;
+  padding: 10px 20px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+}
+.state__action:hover {
+  background: var(--accent-hover);
+}
+.state__examples {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.state--error .state__title {
+  color: var(--danger);
+}
+
+/* ----------------------------------------------------------------------------
+   Skeleton loading
+---------------------------------------------------------------------------- */
+.skeleton {
+  background: linear-gradient(90deg, #eceff2 25%, #f4f6f8 37%, #eceff2 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 6px;
+}
+.skeleton--avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.skeleton--line {
+  height: 14px;
+  margin: 10px 0;
+}
+.skeleton--w30 {
+  width: 30%;
+}
+.skeleton--w40 {
+  width: 40%;
+}
+.skeleton--w50 {
+  width: 50%;
+}
+.skeleton--w60 {
+  width: 60%;
+}
+.skeleton--w80 {
+  width: 80%;
+}
+.skeleton--w90 {
+  width: 90%;
+}
+.repo--skeleton {
+  padding: 16px 24px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Responsive
+---------------------------------------------------------------------------- */
+@media (max-width: 560px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .profile__identity,
+  .profile__stats,
+  .profile__meta {
+    justify-content: center;
+  }
+  .search-bar {
+    flex-direction: column;
+  }
+  .repo__updated {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+  .repo__details {
+    animation: none;
+  }
+}
