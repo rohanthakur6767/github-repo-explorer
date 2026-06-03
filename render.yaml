@@ -1,0 +1,21 @@
+# Render Blueprint for the backend API.
+# In the Render dashboard: New > Blueprint, point it at this repo, then set the
+# two secret env vars (GITHUB_TOKEN, CLIENT_ORIGIN) when prompted.
+services:
+  - type: web
+    name: github-repo-explorer-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      # Your deployed Vercel frontend URL, e.g. https://your-app.vercel.app
+      - key: CLIENT_ORIGIN
+        sync: false
+      # Optional GitHub token (raises rate limit 60 -> 5000/hr). Set in dashboard.
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: CACHE_TTL_MS
+        value: "60000"
