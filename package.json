@@ -1,0 +1,24 @@
+{
+  "name": "github-repo-explorer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A full-stack GitHub profile and repository explorer. The Node/Express backend proxies the GitHub API, adds server-side caching, and handles errors so the React frontend never talks to GitHub directly.",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,green \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "build": "npm run build --workspace client",
+    "test": "npm run test --workspace server",
+    "start": "npm run start --workspace server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
