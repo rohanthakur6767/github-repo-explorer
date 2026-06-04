@@ -193,7 +193,8 @@ github-repo-explorer/
 │       │   └── githubApi.js        # fetch wrapper for OUR backend (never GitHub)
 │       ├── hooks/
 │       │   ├── useGithubProfile.js # search / sort / load-more orchestration
-│       │   └── useRecentSearches.js# localStorage-backed recent list
+│       │   ├── useRecentSearches.js# localStorage-backed recent list
+│       │   └── useDebouncedValue.js# debounce helper for search-as-you-type
 │       ├── components/
 │       │   ├── SearchBar.jsx
 │       │   ├── RecentSearches.jsx
@@ -242,14 +243,21 @@ github-repo-explorer/
 **Nice to Have (Bonus):**
 - ✅ Recently-searched list persisted in `localStorage`
 - ✅ Language-distribution chart across the profile (dependency-free)
-- ⬜ Debounced search-as-you-type (deliberately omitted — see Next Steps)
+- ✅ Debounced search-as-you-type (searches ~500ms after you stop typing)
+
+**Extra polish:**
+- ✅ **Accessibility** — an `aria-live` region announces results/errors to screen
+  readers; the search has a proper label and the repo expanders use `aria-expanded`.
+- ✅ Only *deliberate* searches (submit / suggestion click) are saved to Recent, so
+  prefixes you pause on while typing don't clutter the list.
 
 ---
 
 ## What Works / Honest Notes
 
-- Everything in **Must / Should Have** works end-to-end, plus two of the three
-  bonuses. Verified against real GitHub profiles (e.g. `torvalds`, `sindresorhus`).
+- Everything in **Must / Should Have** works end-to-end, plus all three bonuses
+  and accessibility polish. Verified against real GitHub profiles (e.g. `torvalds`,
+  `gaearon`, `sindresorhus`).
 - **Repo cap:** to bound rate-limit cost, the backend fetches up to **300 repos**
   (3 pages of 100) per user, then sorts/paginates over that set. For the vast
   majority of users this is the full set; for users with 1000+ repos the count
@@ -264,16 +272,15 @@ github-repo-explorer/
 
 ## Next Steps (with more time)
 
-- **Debounced search-as-you-type** — straightforward to add, but it multiplies
-  GitHub calls; I kept search on submit to be deliberate about the rate limit.
 - **Full pagination passthrough** so users with >300 repos see everything (stream
   pages from GitHub on demand rather than capping).
 - **Shared cache** (Redis) so caching survives restarts and works across multiple
   backend instances.
 - **More tests** — a few frontend component tests (React Testing Library) and a
   cache-expiry integration test on the route layer.
-- **Accessibility polish** — focus management after search, `aria-live` on the
-  results region for screen readers.
+- **Accessibility** — building on the `aria-live` region already in place, add
+  focus management (move focus to results after a search) and full keyboard-only
+  testing.
 
 ---
 
