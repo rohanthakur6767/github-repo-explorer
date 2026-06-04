@@ -14,11 +14,16 @@ server-side, and maps upstream failures to clean, typed errors.
 
 | | URL |
 |---|---|
-| **Frontend** (Vercel) | _TODO: paste deployed link_ |
-| **Backend** (Render)  | _TODO: paste deployed link_ |
+| **Frontend** (Vercel) | https://github-repo-explorer-client.vercel.app |
+| **Backend** (Render)  | https://github-repo-explorer-whmn.onrender.com |
 
 > Tested from an incognito window to confirm the deployed frontend talks to the
 > deployed backend.
+>
+> ⚠️ **Cold start:** the backend runs on Render's free tier, which sleeps after
+> ~15 minutes of inactivity. The **first** request after a nap can take ~50s to
+> wake the server; subsequent requests are fast. If the first search seems to
+> hang, give it a moment — it is not broken.
 
 ---
 
@@ -52,7 +57,7 @@ Both reasons called out in the brief:
 
 ```bash
 # 1. Clone and enter the project
-git clone <your-repo-url>
+git clone https://github.com/rohanthakur6767/github-repo-explorer.git
 cd github-repo-explorer
 
 # 2. Install everything (npm workspaces installs both client and server)
