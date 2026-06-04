@@ -3,17 +3,21 @@
    A small set of CSS variables keeps colours, spacing, and radii consistent.
 ---------------------------------------------------------------------------- */
 :root {
-  --bg: #f6f8fa;
+  --bg: #f4f5fb;
   --surface: #ffffff;
-  --border: #d8dee4;
+  --border: #e4e7ec;
   --text: #1f2328;
-  --text-muted: #656d76;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --danger: #cf222e;
-  --shadow: 0 1px 3px rgba(27, 31, 36, 0.08), 0 1px 2px rgba(27, 31, 36, 0.06);
-  --radius: 12px;
-  --radius-sm: 8px;
+  --text-muted: #5b636e;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef2ff;
+  --accent-grad: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --danger: #dc2626;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow: 0 4px 16px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 28px rgba(79, 70, 229, 0.12);
+  --radius: 14px;
+  --radius-sm: 10px;
   --space: 16px;
   --max-width: 880px;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -31,10 +35,15 @@ body {
 
 body {
   font-family: var(--font);
-  background: var(--bg);
   color: var(--text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* Soft indigo wash at the top that fades into the page background. */
+  background:
+    radial-gradient(1100px 380px at 50% -120px, var(--accent-soft) 0%, rgba(238, 242, 255, 0) 70%),
+    var(--bg);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 a {
@@ -68,7 +77,7 @@ button {
 .app {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: clamp(16px, 4vw, 40px) var(--space) 64px;
+  padding: clamp(20px, 4vw, 48px) var(--space) 64px;
 }
 
 .app__header {
@@ -76,20 +85,36 @@ button {
   margin-bottom: 32px;
 }
 
+.app__brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.app__logo {
+  color: var(--accent);
+}
+
 .app__title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  margin: 0 0 4px;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  margin: 0;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
 }
 
 .app__subtitle {
   color: var(--text-muted);
-  margin: 0 0 24px;
+  margin: 0 0 26px;
 }
 
 .app__main {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
 }
 
 .app__footer {
@@ -104,41 +129,58 @@ button {
 ---------------------------------------------------------------------------- */
 .search-bar {
   display: flex;
-  gap: 8px;
-  max-width: 520px;
+  gap: 10px;
+  max-width: 540px;
   margin: 0 auto;
 }
 
-.search-bar__input {
+.search-bar__field {
+  position: relative;
   flex: 1;
-  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+}
+.search-bar__icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-bar__input {
+  width: 100%;
+  padding: 13px 16px 13px 44px;
   font-size: 1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .search-bar__input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.14);
 }
 
 .search-bar__button {
-  padding: 12px 20px;
+  padding: 13px 24px;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background: var(--accent);
+  background: var(--accent-grad);
   border: none;
   border-radius: var(--radius-sm);
-  transition: background 0.15s ease;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 .search-bar__button:hover:not(:disabled) {
-  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
 }
 .search-bar__button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
@@ -146,8 +188,8 @@ button {
    Recent searches + chips
 ---------------------------------------------------------------------------- */
 .recent {
-  max-width: 520px;
-  margin: 16px auto 0;
+  max-width: 540px;
+  margin: 18px auto 0;
 }
 .recent__header {
   display: flex;
@@ -156,11 +198,11 @@ button {
   margin-bottom: 8px;
 }
 .recent__label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 .recent__clear {
   font-size: 0.8rem;
@@ -178,26 +220,30 @@ button {
 }
 
 .chip {
-  padding: 5px 12px;
+  padding: 6px 14px;
   font-size: 0.85rem;
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
 }
 .chip:hover {
   border-color: var(--accent);
   color: var(--accent);
+  background: var(--accent-soft);
 }
 .chip--sm {
   padding: 2px 10px;
   font-size: 0.78rem;
   cursor: default;
+  box-shadow: none;
 }
 .chip--sm:hover {
   border-color: var(--border);
   color: var(--text);
+  background: var(--surface);
 }
 
 /* ----------------------------------------------------------------------------
@@ -211,6 +257,7 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  animation: fade-up 0.28s ease both;
 }
 
 /* ----------------------------------------------------------------------------
@@ -219,11 +266,12 @@ button {
 .profile {
   display: flex;
   gap: 24px;
-  padding: 24px;
+  padding: 26px;
 }
 .profile__avatar {
   border-radius: 50%;
-  border: 1px solid var(--border);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--border), var(--shadow);
   flex-shrink: 0;
   object-fit: cover;
 }
@@ -239,7 +287,8 @@ button {
 }
 .profile__name {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
 }
 .profile__login {
   color: var(--text-muted);
@@ -251,16 +300,20 @@ button {
 .profile__stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   list-style: none;
   padding: 0;
-  margin: 14px 0;
-}
-.profile__stats strong {
-  color: var(--text);
+  margin: 16px 0;
 }
 .profile__stats li {
+  padding: 7px 14px;
+  background: var(--accent-soft);
+  border-radius: 999px;
   color: var(--text-muted);
+  font-size: 0.88rem;
+}
+.profile__stats strong {
+  color: var(--accent);
 }
 .profile__meta {
   display: flex;
@@ -277,7 +330,7 @@ button {
    Language bar
 ---------------------------------------------------------------------------- */
 .lang {
-  padding: 20px 24px;
+  padding: 22px 26px;
 }
 .lang__title {
   margin: 0 0 12px;
@@ -285,13 +338,18 @@ button {
 }
 .lang__bar {
   display: flex;
-  height: 10px;
+  height: 12px;
   border-radius: 999px;
   overflow: hidden;
   background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--border);
 }
 .lang__segment {
   height: 100%;
+  transition: filter 0.15s ease;
+}
+.lang__segment:hover {
+  filter: brightness(1.08);
 }
 .lang__legend {
   display: flex;
@@ -328,7 +386,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 24px;
+  padding: 14px 26px;
   flex-wrap: wrap;
 }
 .repos__title {
@@ -340,7 +398,7 @@ button {
   font-weight: 400;
 }
 .repos__empty {
-  padding: 0 24px 16px;
+  padding: 0 26px 16px;
   color: var(--text-muted);
 }
 .repos__list {
@@ -362,12 +420,17 @@ button {
   color: var(--text-muted);
 }
 .sort-control select {
-  padding: 6px 10px;
+  padding: 7px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
   font-size: 0.9rem;
+  cursor: pointer;
+}
+.sort-control select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 /* ----------------------------------------------------------------------------
@@ -375,6 +438,22 @@ button {
 ---------------------------------------------------------------------------- */
 .repo {
   border-top: 1px solid var(--border);
+  position: relative;
+}
+.repo::before {
+  /* Accent bar that slides in on hover for a bit of life. */
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent-grad);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.repo:hover::before {
+  opacity: 1;
 }
 .repo__header {
   display: block;
@@ -382,10 +461,11 @@ button {
   text-align: left;
   background: none;
   border: none;
-  padding: 16px 24px;
+  padding: 16px 26px;
+  transition: background 0.12s ease;
 }
 .repo__header:hover {
-  background: var(--bg);
+  background: var(--accent-soft);
 }
 .repo__title-row {
   display: flex;
@@ -399,7 +479,7 @@ button {
 }
 .repo__badge {
   font-size: 0.7rem;
-  padding: 1px 7px;
+  padding: 1px 8px;
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--text-muted);
@@ -437,7 +517,7 @@ button {
 }
 
 .repo__details {
-  padding: 0 24px 18px;
+  padding: 0 26px 18px;
   animation: fade-in 0.18s ease;
 }
 .repo__details dl {
@@ -470,15 +550,17 @@ button {
 .repos__load-more {
   display: block;
   margin: 16px auto 8px;
-  padding: 10px 24px;
+  padding: 10px 26px;
   font-weight: 600;
   color: var(--accent);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 .repos__load-more:hover:not(:disabled) {
   border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .repos__load-more:disabled {
   opacity: 0.6;
@@ -489,15 +571,15 @@ button {
    States (welcome / error)
 ---------------------------------------------------------------------------- */
 .state {
-  padding: 48px 24px;
+  padding: 52px 24px;
   text-align: center;
 }
 .state__icon {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
 }
 .state__title {
   margin: 12px 0 4px;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
 }
 .state__body {
   color: var(--text-muted);
@@ -506,15 +588,17 @@ button {
 }
 .state__action {
   margin-top: 18px;
-  padding: 10px 20px;
+  padding: 11px 22px;
   font-weight: 600;
   color: #fff;
-  background: var(--accent);
+  background: var(--accent-grad);
   border: none;
   border-radius: var(--radius-sm);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
 }
 .state__action:hover {
-  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
 }
 .state__examples {
   display: flex;
@@ -522,7 +606,7 @@ button {
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 22px;
   color: var(--text-muted);
   font-size: 0.9rem;
 }
@@ -534,7 +618,7 @@ button {
    Skeleton loading
 ---------------------------------------------------------------------------- */
 .skeleton {
-  background: linear-gradient(90deg, #eceff2 25%, #f4f6f8 37%, #eceff2 63%);
+  background: linear-gradient(90deg, #eceff4 25%, #f5f7fa 37%, #eceff4 63%);
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
   border-radius: 6px;
@@ -568,7 +652,7 @@ button {
   width: 90%;
 }
 .repo--skeleton {
-  padding: 16px 24px;
+  padding: 16px 26px;
 }
 
 @keyframes shimmer {
@@ -583,6 +667,16 @@ button {
   from {
     opacity: 0;
     transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -613,10 +707,16 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skeleton {
+  .skeleton,
+  .repo__details,
+  .profile,
+  .repos,
+  .lang,
+  .state {
     animation: none;
   }
-  .repo__details {
-    animation: none;
+  .search-bar__button:hover,
+  .state__action:hover {
+    transform: none;
   }
 }
