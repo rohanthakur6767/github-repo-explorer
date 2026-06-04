@@ -1,11 +1,14 @@
 # Render Blueprint for the backend API.
 # In the Render dashboard: New > Blueprint, point it at this repo, then set the
 # two secret env vars (GITHUB_TOKEN, CLIENT_ORIGIN) when prompted.
+#
+# Commands run from the REPO ROOT (not server/) because this is an npm
+# workspace: `npm install` installs the workspace and `npm start` proxies to
+# the server workspace (see the root package.json "start" script).
 services:
   - type: web
     name: github-repo-explorer-api
     runtime: node
-    rootDir: server
     plan: free
     buildCommand: npm install
     startCommand: npm start
